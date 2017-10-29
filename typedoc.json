@@ -1,0 +1,7 @@
+{
+  "name": "Sink",
+  "includeDeclarations": false,
+  "theme": "minimal",
+  "mode": "file",
+  "out": "docs/"
+}

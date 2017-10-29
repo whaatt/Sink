@@ -1,0 +1,50 @@
+{
+  "name": "sink",
+  "version": "0.0.1",
+  "description": "Proof-of-concept shared spreadsheets.",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf build docs",
+    "docs": "typedoc --options typedoc.json source/",
+    "lint": "tslint --project tsconfig.json --format stylish",
+    "prepare": "run-s clean lint build docs",
+    "test": "mocha",
+    "watch": "tsc -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/whaatt/Sink.git"
+  },
+  "keywords": [
+    "spreadsheet",
+    "sync"
+  ],
+  "author": {
+    "name": "Sanjay Kannan",
+    "email": "whaatt@gmail.com",
+    "url": "https://skalon.com"
+  },
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/whaatt/Sink/issues"
+  },
+  "homepage": "https://github.com/whaatt/Sink",
+  "dependencies": {
+    "module-alias": "^2.0.1",
+    "reflect-metadata": "^0.1.10",
+    "source-map-support": "^0.4.18",
+    "tslib": "^1.7.1",
+    "uuid": "^3.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^8.0.28",
+    "mocha": "^3.5.3",
+    "npm-run-all": "^4.1.1",
+    "rimraf": "^2.6.2",
+    "tslint": "^5.7.0",
+    "tslint-config-standard": "^6.0.1",
+    "typedoc": "^0.8.0",
+    "typescript": "^2.5.2"
+  },
+  "_moduleAliases": {}
+}
