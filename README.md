@@ -1,7 +1,6 @@
-# Introduction #
+# Sink #
 
-This is a proof-of-concept shared spreadsheets application, designed and
-implemented as part of the candidate recruitment process at Airtable.
+Sink is a proof-of-concept shared spreadsheets application.
 
 ## Setup ##
 

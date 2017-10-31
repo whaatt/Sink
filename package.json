@@ -30,7 +30,8 @@
   },
   "homepage": "https://github.com/whaatt/Sink",
   "dependencies": {
-    "module-alias": "^2.0.1",
+    "@types/uuid": "^3.4.3",
+    "module-alias": "^2.0.2",
     "reflect-metadata": "^0.1.10",
     "source-map-support": "^0.4.18",
     "tslib": "^1.7.1",
@@ -46,5 +47,7 @@
     "typedoc": "^0.8.0",
     "typescript": "^2.5.2"
   },
-  "_moduleAliases": {}
+  "_moduleAliases": {
+    "common": "build/source/common"
+  }
 }

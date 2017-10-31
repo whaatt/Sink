@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "eg2.tslint",
+    "joelday.docthis",
+    "amatiasq.sort-imports",
+    "steoates.autoimport"
+  ]
+}

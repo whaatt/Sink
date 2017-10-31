@@ -1,0 +1,9 @@
+{
+  "files.eol": "\n",
+  "tslint.autoFixOnSave": true,
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
+  "editor.rulers": [
+    79
+  ]
+}
