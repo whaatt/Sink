@@ -4,7 +4,7 @@
  * @export
  * @enum {number}
  */
-export enum ShiftType {
+enum ShiftType {
   Insert,
   Delete
 }
@@ -15,7 +15,7 @@ export enum ShiftType {
  * @export
  * @interface ShiftRecord
  */
-export class ShiftRecord {
+class ShiftRecord {
   constructor (public type: ShiftType, public index: number) {}
 }
 
@@ -27,7 +27,7 @@ export class ShiftRecord {
  * @class ShiftContext
  */
 export class ShiftContext {
-  private shifts: Array<ShiftRecord>
+  private shifts: ShiftRecord[] = new Array()
 
   /**
    * Records an insertion.

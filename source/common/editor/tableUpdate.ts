@@ -1,5 +1,4 @@
-import { Cell, Column, ColumnType, IDType, Row, Table }
-  from 'common/spreadsheet'
+import { ColumnID, Index, RowID, Table, Type } from 'common/spreadsheet'
 
 import { ShiftContext } from './shiftContext'
 
@@ -9,18 +8,36 @@ import { ShiftContext } from './shiftContext'
  * @export
  * @interface TableUpdate
  */
-export interface TableUpdate {
+export abstract class TableUpdate {
   /**
-   * Mutates a table according to this message and a shift context. Returns
-   * true on success, or false if the message ran into an irreconcilable merge
-   * conflict.
+   * Returns whether this update has indices to be transformed.
+   *
+   * @returns {boolean} Whether this update has indices to be transformed.
+   * @memberof TableUpdate
+   */
+  needsTransform (): boolean {
+    return false
+  }
+
+  /**
+   * Transforms this update based on the given shift context.
+   *
+   * @param {ShiftContext} context The shift context
+   * @memberof TableUpdate
+   */
+  transform (context: ShiftContext): void {
+    return // No-op.
+  }
+
+  /**
+   * Mutates a table according to this message. Returns true on success, or
+   * false if the message ran into an irreconcilable merge conflict.
    *
    * @param {Table} table The table to mutate.
-   * @param {ShiftContext} context The shift context to apply.
    * @returns {boolean} Whether the merge was successful.
    * @memberof Update
    */
-  apply (table: Table, context: ShiftContext): boolean
+  abstract apply (table: Table): boolean
 
   /**
    * Modifies the passed shift context based on this materialized update. If
@@ -30,7 +47,9 @@ export interface TableUpdate {
    * @param {ShiftContext} context The shift context to modify.
    * @memberof Update
    */
-  shift (context: ShiftContext): void
+  shift (context: ShiftContext): void {
+    return // No-op.
+  }
 }
 
 export namespace TableUpdate {
@@ -41,22 +60,20 @@ export namespace TableUpdate {
    * @class CreateRow
    * @implements {TableUpdate}
    */
-  export class CreateRow implements TableUpdate {
-    constructor (private rowID: IDType) {}
+  export class CreateRow extends TableUpdate {
+    constructor (private rowID: RowID) {
+      super()
+    }
 
-    apply (table: Table, context: ShiftContext): boolean {
-      if (table.rowIndices.has(this.rowID)) {
+    apply (table: Table): boolean {
+      if (table.rows.has(this.rowID)) {
         return false
       }
 
-      table.rowIndices.set(this.rowID, table.rows.length)
       table.cells.set(this.rowID, new Map())
-      table.rows.push(new Row())
+      table.order.push(this.rowID)
+      table.computeRowMap()
       return true
-    }
-
-    shift (context: ShiftContext): void {
-      return // No-op.
     }
   }
 
@@ -67,22 +84,24 @@ export namespace TableUpdate {
    * @class DestroyRow
    * @implements {TableUpdate}
    */
-  export class DestroyRow implements TableUpdate {
+  export class DestroyRow extends TableUpdate {
     private index: number = -1 // Saves final index.
-    constructor (private rowID: IDType) {}
+    constructor (private rowID: RowID) {
+      super()
+    }
 
-    apply (table: Table, context: ShiftContext): boolean {
-      if (!table.rowIndices.has(this.rowID)) {
+    apply (table: Table): boolean {
+      if (!table.rows.has(this.rowID)) {
         return false
       }
 
       // Ugly cast to number silences a compiler error due to get() returning
-      // potentially undefined, which cannot happen because we check above.
-      this.index = context.transform(Number(table.rowIndices.get(this.rowID)))
+      // potentially undefined, which cannot happen because we check it above.
+      this.index = table.rows.get(this.rowID) as number
 
-      table.rows.splice(this.index, 1)
-      table.rowIndices.delete(this.rowID)
       table.cells.delete(this.rowID)
+      table.order.splice(this.index, 1)
+      table.computeRowMap()
       return true
     }
 
@@ -99,30 +118,34 @@ export namespace TableUpdate {
    * @class MoveRow
    * @implements {TableUpdate}
    */
-  export class MoveRow implements TableUpdate {
+  export class MoveRow extends TableUpdate {
     private start: number = -1 // Saves final start index.
-    private end: number = -1 // Saves final end index.
-    constructor (private rowID: IDType, private targetIndex: number) {}
+    constructor (private rowID: RowID, private targetIndex: Index) {
+      super()
+    }
 
-    apply (table: Table, context: ShiftContext): boolean {
-      if (!table.rowIndices.has(this.rowID)) {
+    transform (context: ShiftContext): void {
+      this.targetIndex = context.transform(this.targetIndex)
+    }
+
+    apply (table: Table): boolean {
+      if (!table.rows.has(this.rowID)) {
         return false
       }
 
       // Ugly cast to number silences a compiler error due to get() returning
-      // potentially undefined, which cannot happen because we check above.
-      this.start = context.transform(Number(table.rowIndices.get(this.rowID)))
-      this.end = context.transform(this.targetIndex)
+      // potentially undefined, which cannot happen because we check it above.
+      this.start = table.rows.get(this.rowID) as number
 
-      const row = table.rows.splice(this.start, 1)[0]
-      table.rows.splice(this.end, 0, row) // Insert at.
-      table.rowIndices.set(this.rowID, this.end)
+      const rowID = table.order.splice(this.start, 1)[0]
+      table.order.splice(this.targetIndex, 0, rowID)
+      table.computeRowMap()
       return true
     }
 
     shift (context: ShiftContext): void {
       if (this.start === -1) throw new Error('shift called before apply')
-      context.move(this.start, this.end)
+      context.move(this.start, this.targetIndex)
     }
   }
 
@@ -133,22 +156,18 @@ export namespace TableUpdate {
    * @class CreateColumn
    * @implements {TableUpdate}
    */
-  export class CreateColumn implements TableUpdate {
-    constructor (
-      private columnID: IDType, private columnType: ColumnType) {}
+  export class CreateColumn extends TableUpdate {
+    constructor (private columnID: ColumnID, private columnType: Type) {
+      super()
+    }
 
-    apply (table: Table, context: ShiftContext): boolean {
+    apply (table: Table): boolean {
       if (table.columns.has(this.columnID)) {
         return false
       }
 
-      table.columns.set(this.columnID, new Column(this.columnType))
-      table.cells.forEach((columns) => columns.set(this.columnID, new Cell()))
+      table.columns.set(this.columnID, this.columnType)
       return true
-    }
-
-    shift (context: ShiftContext): void {
-      return // No-op.
     }
   }
 
@@ -159,10 +178,12 @@ export namespace TableUpdate {
    * @class DestroyColumn
    * @implements {TableUpdate}
    */
-  export class DestroyColumn implements TableUpdate {
-    constructor (private columnID: IDType) {}
+  export class DestroyColumn extends TableUpdate {
+    constructor (private columnID: ColumnID) {
+      super()
+    }
 
-    apply (table: Table, context: ShiftContext): boolean {
+    apply (table: Table): boolean {
       if (!table.columns.has(this.columnID)) {
         return false
       }
@@ -170,10 +191,6 @@ export namespace TableUpdate {
       table.columns.delete(this.columnID)
       table.cells.forEach((columns) => columns.delete(this.columnID))
       return true
-    }
-
-    shift (context: ShiftContext): void {
-      return // No-op.
     }
   }
 
@@ -184,10 +201,12 @@ export namespace TableUpdate {
    * @class UpdateColumnType
    * @implements {TableUpdate}
    */
-  export class UpdateColumnType implements TableUpdate {
-    constructor (private columnID: IDType, private columnType: ColumnType) {}
+  export class UpdateColumnType extends TableUpdate {
+    constructor (private columnID: ColumnID, private columnType: Type) {
+      super()
+    }
 
-    apply (table: Table, context: ShiftContext): boolean {
+    apply (table: Table): boolean {
       if (!table.columns.has(this.columnID)) {
         return false
       }
@@ -196,27 +215,17 @@ export namespace TableUpdate {
       // Can whole column can be coerced?
       table.cells.forEach((columns) => {
         const cell = columns.get(this.columnID)
-        if (cell !== undefined) {
-          if (this.columnType.coerce(cell.value) === undefined) {
-            canCoerce = false
-          }
-        }
+        if (this.columnType.coerce(cell) === undefined) canCoerce = false
       })
 
       if (!canCoerce) return false
       // Whole column can be coerced.
       table.cells.forEach((columns) => {
         const cell = columns.get(this.columnID)
-        if (cell !== undefined) {
-          cell.value = this.columnType.coerce(cell.value)
-        }
+        columns.set(this.columnID, this.columnType.coerce(cell))
       })
 
       return true
-    }
-
-    shift (context: ShiftContext): void {
-      return // No-op.
     }
   }
 
@@ -227,31 +236,29 @@ export namespace TableUpdate {
    * @class UpdateTextCellValue
    * @implements {TableUpdate}
    */
-  export class UpdateTextCellValue implements TableUpdate {
+  export class UpdateTextCellValue extends TableUpdate {
     constructor (
-      private rowID: IDType,
-      private columnID: IDType,
-      private cellValue: string) {}
+      private rowID: RowID,
+      private columnID: ColumnID,
+      private cellValue: string) {
+      super()
+    }
 
-    apply (table: Table, context: ShiftContext): boolean {
-      // Verify that the cell at (Row, Column) exists.
-      const columns = table.cells.get(this.rowID)
-      if (columns === undefined) return false
-      const cell = columns.get(this.columnID)
-      if (cell === undefined) return false
+    apply (table: Table): boolean {
+      // Verify that the Row and Column pair exists.
+      const type = table.columns.get(this.columnID)
+      if (type === undefined) return false
+      const index = table.rows.get(this.rowID)
+      if (index === undefined) return false
 
-      // Verify that the cell column type is Text.
-      const column = table.columns.get(this.columnID)
-      if (column === undefined || column.type !== ColumnType.Text) {
+      // Verify column type.
+      if (type !== Type.Text) {
         return false
       }
 
-      cell.value = this.cellValue
+      const rowColumns = table.cells.get(this.rowID) as Map<ColumnID, any>
+      rowColumns.set(this.columnID, this.cellValue)
       return true
-    }
-
-    shift (context: ShiftContext): void {
-      return // No-op.
     }
   }
 
@@ -262,31 +269,29 @@ export namespace TableUpdate {
    * @class UpdateNumberCellValue
    * @implements {TableUpdate}
    */
-  export class UpdateNumberCellValue implements TableUpdate {
+  export class UpdateNumberCellValue extends TableUpdate {
     constructor (
-      private rowID: IDType,
-      private columnID: IDType,
-      private cellValue: string) {}
+      private rowID: RowID,
+      private columnID: ColumnID,
+      private cellValue: number) {
+      super()
+    }
 
-    apply (table: Table, context: ShiftContext): boolean {
-      // Verify that the cell at (Row, Column) exists.
-      const columns = table.cells.get(this.rowID)
-      if (columns === undefined) return false
-      const cell = columns.get(this.columnID)
-      if (cell === undefined) return false
+    apply (table: Table): boolean {
+      // Verify that the Row and Column pair exists.
+      const type = table.columns.get(this.columnID)
+      if (type === undefined) return false
+      const index = table.rows.get(this.rowID)
+      if (index === undefined) return false
 
-      // Verify that the cell column type is Number.
-      const column = table.columns.get(this.columnID)
-      if (column === undefined || column.type !== ColumnType.Number) {
+      // Verify column type.
+      if (type !== Type.Number) {
         return false
       }
 
-      cell.value = this.cellValue
+      const rowColumns = table.cells.get(this.rowID) as Map<ColumnID, any>
+      rowColumns.set(this.columnID, this.cellValue)
       return true
-    }
-
-    shift (context: ShiftContext): void {
-      return // No-op.
     }
   }
 }

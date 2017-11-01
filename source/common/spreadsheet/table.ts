@@ -1,49 +1,63 @@
-import { Cell } from './cell'
-import { Column } from './column'
-import { Row } from './row'
+import { Type } from './type'
 
-// For self-documentation.
-export type IDType = string
-export type IndexType = number
+// For self-documenting types.
+export type ColumnID = string
+export type RowID = string
+export type Index = number
+
+// For convenience.
+class ColumnOutput {
+  // tslint:disable-next-line
+  constructor (private id: string, private type: string) {}
+}
+
+// For convenience.
+class RowOutput {
+  // tslint:disable-next-line
+  constructor (private id: string, private cellValuesByColumnId: object) {}
+}
 
 /**
- * A single table (spreadsheet).
+ * A single table.
  *
  * Cells are represented in a nested Row => Column => Cell map of maps. The
- * ordering of rows is stored in an auxiliary data structure.
+ * ordering of rows and the typing of columns are stored in an auxiliary data
+ * structure.
  *
  * @export
  * @class Table
  */
 export class Table {
-  /* Public so we can access these directly from common/editor/update. In a
-     slightly more production-ready implementation, we might add a layer of
-     indirection through individual getters and setters. */
-  public cells: Map<IDType, Map<IDType, Cell>> = new Map()
-  public rowIndices: Map<IDType, number> = new Map()
-  public columns: Map<IDType, Column> = new Map()
-  public rows: Row[] = new Array()
+  // In the future, Type and Index could be extracted into classes for Column
+  // and Row respectively. For simplicity, we use these raw attributes here.
+  public cells: Map<RowID, Map<ColumnID, any>> = new Map()
+  public columns: Map<ColumnID, Type> = new Map()
+  public rows: Map<RowID, Index> = new Map()
+  public order: RowID[] = new Array()
 
   /**
-   * Semi-deep copies this table (rows, columns, and cells are each shallow
-   * copied).
+   * Compute mappings from row IDs to row order indices.
+   *
+   * @memberof Table
+   */
+  public computeRowMap (): void {
+    this.rows.clear() // Mappings invalidated.
+    this.order.forEach((rowID, index) => this.rows.set(rowID, index))
+  }
+
+  /**
+   * Shallow copies this table.
    *
    * @returns {Table} A copy table.
    * @memberof Table
    */
   public copy (): Table {
     const newTable = new Table()
-    this.cells.forEach((row, rowID) => {
-      const newMap = new Map()
-      newTable.cells.set(rowID, newMap)
-      row.forEach((cell, columnID) =>
-        newMap.set(columnID, cell))
-    })
-    this.rowIndices.forEach((index, ID) =>
-      newTable.rowIndices.set(ID, index))
-    this.columns.forEach((column, ID) =>
-      newTable.columns.set(ID, column.copy()))
-    this.rows.forEach(row => newTable.rows.push(row.copy()))
+    this.cells.forEach((column, rowID) => newTable.cells
+      .set(rowID, new Map(this.cells.get(rowID) as Map<ColumnID, any>)))
+    newTable.columns = new Map(this.columns)
+    newTable.rows = new Map(this.rows)
+    newTable.order = this.order.slice()
     return newTable
   }
 
@@ -60,17 +74,17 @@ export class Table {
       rows: []
     }
 
-    this.columns.forEach((column, columnID) => objectJSON['columns'].push({
-      id: columnID,
-      type: column.type.toString()
-    }))
+    // Add all columns with their types.
+    this.columns.forEach((type, columnID) =>
+      objectJSON.columns.push(new ColumnOutput(columnID, type.toString())))
 
-    this.cells.forEach((column, rowID) => objectJSON['rows'].push({
-      id: rowID,
-      cellValuesByColumnId: Object.assign(Array.from(column)
-        .map(([columnID, cell]) => ({ [columnID]: cell.value })))
-    }))
+    // Add rows with cell values by column.
+    this.order.forEach((rowID) => objectJSON.rows
+      .push(new RowOutput(rowID, Object.assign(Array
+        .from(this.cells.get(rowID) as Map<ColumnID, any>)
+        .map(([columnID, cell]) => ({ [columnID]: cell }))))))
 
+    // Last two parameters specify pretty-print tabbing.
     return JSON.stringify(objectJSON, null, spaces)
   }
 }

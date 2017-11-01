@@ -909,28 +909,28 @@ img { max-width: 100%; }
 </header>
 <nav class="tsd-navigation secondary">
 	<ul>
-		<li class=" tsd-kind-enum">
+		<li class=" tsd-kind-enum tsd-is-not-exported">
 			<a href="../enums/shifttype.html" class="tsd-kind-icon">Shift<wbr>Type</a>
 		</li>
 		<li class=" tsd-kind-class">
-			<a href="cell.html" class="tsd-kind-icon">Cell</a>
+			<a href="client.html" class="tsd-kind-icon">Client</a>
 		</li>
-		<li class=" tsd-kind-class">
-			<a href="column.html" class="tsd-kind-icon">Column</a>
-		</li>
-		<li class=" tsd-kind-class">
-			<a href="columntype.html" class="tsd-kind-icon">Column<wbr>Type</a>
+		<li class=" tsd-kind-class tsd-is-not-exported">
+			<a href="columnoutput.html" class="tsd-kind-icon">Column<wbr>Output</a>
 		</li>
 		<li class=" tsd-kind-class">
 			<a href="message.html" class="tsd-kind-icon">Message</a>
 		</li>
+		<li class=" tsd-kind-class tsd-is-not-exported">
+			<a href="rowoutput.html" class="tsd-kind-icon">Row<wbr>Output</a>
+		</li>
 		<li class=" tsd-kind-class">
-			<a href="row.html" class="tsd-kind-icon">Row</a>
+			<a href="server.html" class="tsd-kind-icon">Server</a>
 		</li>
 		<li class=" tsd-kind-class">
 			<a href="shiftcontext.html" class="tsd-kind-icon">Shift<wbr>Context</a>
 		</li>
-		<li class=" tsd-kind-class">
+		<li class=" tsd-kind-class tsd-is-not-exported">
 			<a href="shiftrecord.html" class="tsd-kind-icon">Shift<wbr>Record</a>
 		</li>
 		<li class="current tsd-kind-class">
@@ -943,10 +943,13 @@ img { max-width: 100%; }
 					<a href="table.html#columns" class="tsd-kind-icon">columns</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-class">
-					<a href="table.html#rowindices" class="tsd-kind-icon">row<wbr>Indices</a>
+					<a href="table.html#order" class="tsd-kind-icon">order</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-class">
 					<a href="table.html#rows" class="tsd-kind-icon">rows</a>
+				</li>
+				<li class=" tsd-kind-method tsd-parent-kind-class">
+					<a href="table.html#computerowmap" class="tsd-kind-icon">compute<wbr>Row<wbr>Map</a>
 				</li>
 				<li class=" tsd-kind-method tsd-parent-kind-class">
 					<a href="table.html#copy" class="tsd-kind-icon">copy</a>
@@ -956,11 +959,29 @@ img { max-width: 100%; }
 				</li>
 			</ul>
 		</li>
-		<li class=" tsd-kind-type-alias">
-			<a href="../globals.html#idtype" class="tsd-kind-icon">IDType</a>
+		<li class=" tsd-kind-class">
+			<a href="tableupdate.html" class="tsd-kind-icon">Table<wbr>Update</a>
+		</li>
+		<li class=" tsd-kind-class">
+			<a href="type.html" class="tsd-kind-icon">Type</a>
 		</li>
 		<li class=" tsd-kind-type-alias">
-			<a href="../globals.html#indextype" class="tsd-kind-icon">Index<wbr>Type</a>
+			<a href="../globals.html#columnid" class="tsd-kind-icon">ColumnID</a>
+		</li>
+		<li class=" tsd-kind-type-alias">
+			<a href="../globals.html#groupid" class="tsd-kind-icon">GroupID</a>
+		</li>
+		<li class=" tsd-kind-type-alias">
+			<a href="../globals.html#index" class="tsd-kind-icon">Index</a>
+		</li>
+		<li class=" tsd-kind-type-alias">
+			<a href="../globals.html#messageid" class="tsd-kind-icon">MessageID</a>
+		</li>
+		<li class=" tsd-kind-type-alias">
+			<a href="../globals.html#rowid" class="tsd-kind-icon">RowID</a>
+		</li>
+		<li class=" tsd-kind-type-alias">
+			<a href="../globals.html#version" class="tsd-kind-icon">Version</a>
 		</li>
 	</ul>
 </nav>
@@ -969,10 +990,11 @@ img { max-width: 100%; }
 		<section class="tsd-panel tsd-comment">
 			<div class="tsd-comment tsd-typography">
 				<div class="lead">
-					<p>A single table (spreadsheet).</p>
+					<p>A single table.</p>
 				</div>
 				<p>Cells are represented in a nested Row =&gt; Column =&gt; Cell map of maps. The
-				ordering of rows is stored in an auxiliary data structure.</p>
+					ordering of rows and the typing of columns are stored in an auxiliary data
+				structure.</p>
 				<dl class="tsd-comment-tags">
 					<dt>export</dt>
 					<dd></dd>
@@ -999,13 +1021,14 @@ img { max-width: 100%; }
 						<ul class="tsd-index-list">
 							<li class="tsd-kind-property tsd-parent-kind-class"><a href="table.html#cells" class="tsd-kind-icon">cells</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-class"><a href="table.html#columns" class="tsd-kind-icon">columns</a></li>
-							<li class="tsd-kind-property tsd-parent-kind-class"><a href="table.html#rowindices" class="tsd-kind-icon">row<wbr>Indices</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-class"><a href="table.html#order" class="tsd-kind-icon">order</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-class"><a href="table.html#rows" class="tsd-kind-icon">rows</a></li>
 						</ul>
 					</section>
 					<section class="tsd-index-section ">
 						<h3>Methods</h3>
 						<ul class="tsd-index-list">
+							<li class="tsd-kind-method tsd-parent-kind-class"><a href="table.html#computerowmap" class="tsd-kind-icon">compute<wbr>Row<wbr>Map</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-class"><a href="table.html#copy" class="tsd-kind-icon">copy</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-class"><a href="table.html#serialize" class="tsd-kind-icon">serialize</a></li>
 						</ul>
@@ -1018,46 +1041,73 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 				<a name="cells" class="tsd-anchor"></a>
 				<h3>cells</h3>
-				<div class="tsd-signature tsd-kind-icon">cells<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#idtype" class="tsd-signature-type">IDType</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#idtype" class="tsd-signature-type">IDType</a><span class="tsd-signature-symbol">, </span><a href="cell.html" class="tsd-signature-type">Cell</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;new Map()</span></div>
+				<div class="tsd-signature tsd-kind-icon">cells<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#rowid" class="tsd-signature-type">RowID</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#columnid" class="tsd-signature-type">ColumnID</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;new Map()</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in source/common/spreadsheet/table.ts:22</li>
+						<li>Defined in <a href="https://github.com/whaatt/Sink/blob/5b2348f/source/common/spreadsheet/table.ts#L33">source/common/spreadsheet/table.ts:33</a></li>
 					</ul>
 				</aside>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 				<a name="columns" class="tsd-anchor"></a>
 				<h3>columns</h3>
-				<div class="tsd-signature tsd-kind-icon">columns<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#idtype" class="tsd-signature-type">IDType</a><span class="tsd-signature-symbol">, </span><a href="column.html" class="tsd-signature-type">Column</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;new Map()</span></div>
+				<div class="tsd-signature tsd-kind-icon">columns<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#columnid" class="tsd-signature-type">ColumnID</a><span class="tsd-signature-symbol">, </span><a href="type.html" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;new Map()</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in source/common/spreadsheet/table.ts:24</li>
+						<li>Defined in <a href="https://github.com/whaatt/Sink/blob/5b2348f/source/common/spreadsheet/table.ts#L34">source/common/spreadsheet/table.ts:34</a></li>
 					</ul>
 				</aside>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-				<a name="rowindices" class="tsd-anchor"></a>
-				<h3>row<wbr>Indices</h3>
-				<div class="tsd-signature tsd-kind-icon">row<wbr>Indices<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#idtype" class="tsd-signature-type">IDType</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;new Map()</span></div>
+				<a name="order" class="tsd-anchor"></a>
+				<h3>order</h3>
+				<div class="tsd-signature tsd-kind-icon">order<span class="tsd-signature-symbol">:</span> <a href="../globals.html#rowid" class="tsd-signature-type">RowID</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;new Array()</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in source/common/spreadsheet/table.ts:23</li>
+						<li>Defined in <a href="https://github.com/whaatt/Sink/blob/5b2348f/source/common/spreadsheet/table.ts#L36">source/common/spreadsheet/table.ts:36</a></li>
 					</ul>
 				</aside>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 				<a name="rows" class="tsd-anchor"></a>
 				<h3>rows</h3>
-				<div class="tsd-signature tsd-kind-icon">rows<span class="tsd-signature-symbol">:</span> <a href="row.html" class="tsd-signature-type">Row</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;new Array()</span></div>
+				<div class="tsd-signature tsd-kind-icon">rows<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#rowid" class="tsd-signature-type">RowID</a><span class="tsd-signature-symbol">, </span><a href="../globals.html#index" class="tsd-signature-type">Index</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;new Map()</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in source/common/spreadsheet/table.ts:25</li>
+						<li>Defined in <a href="https://github.com/whaatt/Sink/blob/5b2348f/source/common/spreadsheet/table.ts#L35">source/common/spreadsheet/table.ts:35</a></li>
 					</ul>
 				</aside>
 			</section>
 		</section>
 		<section class="tsd-panel-group tsd-member-group ">
 			<h2>Methods</h2>
+			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<a name="computerowmap" class="tsd-anchor"></a>
+				<h3>compute<wbr>Row<wbr>Map</h3>
+				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<li class="tsd-signature tsd-kind-icon">compute<wbr>Row<wbr>Map<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/whaatt/Sink/blob/5b2348f/source/common/spreadsheet/table.ts#L43">source/common/spreadsheet/table.ts:43</a></li>
+							</ul>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Compute mappings from row IDs to row order indices.</p>
+							</div>
+							<dl class="tsd-comment-tags">
+								<dt>memberof</dt>
+								<dd><p>Table</p>
+								</dd>
+							</dl>
+						</div>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+					</li>
+				</ul>
+			</section>
 			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 				<a name="copy" class="tsd-anchor"></a>
 				<h3>copy</h3>
@@ -1068,13 +1118,12 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in source/common/spreadsheet/table.ts:34</li>
+								<li>Defined in <a href="https://github.com/whaatt/Sink/blob/5b2348f/source/common/spreadsheet/table.ts#L54">source/common/spreadsheet/table.ts:54</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
 							<div class="lead">
-								<p>Semi-deep copies this table (rows, columns, and cells are each shallow
-								copied).</p>
+								<p>Shallow copies this table.</p>
 							</div>
 							<dl class="tsd-comment-tags">
 								<dt>memberof</dt>
@@ -1097,7 +1146,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in source/common/spreadsheet/table.ts:57</li>
+								<li>Defined in <a href="https://github.com/whaatt/Sink/blob/5b2348f/source/common/spreadsheet/table.ts#L71">source/common/spreadsheet/table.ts:71</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">

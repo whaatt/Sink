@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Cell | Sink</title>
+	<title>Type | Sink</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style type="text/css">/*! normalize.css v1.1.3 | MIT License | git.io/normalize */
@@ -909,49 +909,70 @@ img { max-width: 100%; }
 </header>
 <nav class="tsd-navigation secondary">
 	<ul>
-		<li class=" tsd-kind-enum">
+		<li class=" tsd-kind-enum tsd-is-not-exported">
 			<a href="../enums/shifttype.html" class="tsd-kind-icon">Shift<wbr>Type</a>
 		</li>
-		<li class="current tsd-kind-class">
-			<a href="cell.html" class="tsd-kind-icon">Cell</a>
-			<ul>
-				<li class=" tsd-kind-constructor tsd-parent-kind-class">
-					<a href="cell.html#constructor" class="tsd-kind-icon">constructor</a>
-				</li>
-				<li class=" tsd-kind-property tsd-parent-kind-class">
-					<a href="cell.html#value" class="tsd-kind-icon">value</a>
-				</li>
-				<li class=" tsd-kind-method tsd-parent-kind-class">
-					<a href="cell.html#copy" class="tsd-kind-icon">copy</a>
-				</li>
-			</ul>
-		</li>
 		<li class=" tsd-kind-class">
-			<a href="column.html" class="tsd-kind-icon">Column</a>
+			<a href="client.html" class="tsd-kind-icon">Client</a>
 		</li>
-		<li class=" tsd-kind-class">
-			<a href="columntype.html" class="tsd-kind-icon">Column<wbr>Type</a>
+		<li class=" tsd-kind-class tsd-is-not-exported">
+			<a href="columnoutput.html" class="tsd-kind-icon">Column<wbr>Output</a>
 		</li>
 		<li class=" tsd-kind-class">
 			<a href="message.html" class="tsd-kind-icon">Message</a>
 		</li>
+		<li class=" tsd-kind-class tsd-is-not-exported">
+			<a href="rowoutput.html" class="tsd-kind-icon">Row<wbr>Output</a>
+		</li>
 		<li class=" tsd-kind-class">
-			<a href="row.html" class="tsd-kind-icon">Row</a>
+			<a href="server.html" class="tsd-kind-icon">Server</a>
 		</li>
 		<li class=" tsd-kind-class">
 			<a href="shiftcontext.html" class="tsd-kind-icon">Shift<wbr>Context</a>
 		</li>
-		<li class=" tsd-kind-class">
+		<li class=" tsd-kind-class tsd-is-not-exported">
 			<a href="shiftrecord.html" class="tsd-kind-icon">Shift<wbr>Record</a>
 		</li>
 		<li class=" tsd-kind-class">
 			<a href="table.html" class="tsd-kind-icon">Table</a>
 		</li>
-		<li class=" tsd-kind-type-alias">
-			<a href="../globals.html#idtype" class="tsd-kind-icon">IDType</a>
+		<li class=" tsd-kind-class">
+			<a href="tableupdate.html" class="tsd-kind-icon">Table<wbr>Update</a>
+		</li>
+		<li class="current tsd-kind-class">
+			<a href="type.html" class="tsd-kind-icon">Type</a>
+			<ul>
+				<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a href="type.html#number" class="tsd-kind-icon">Number</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a href="type.html#text" class="tsd-kind-icon">Text</a>
+				</li>
+				<li class=" tsd-kind-method tsd-parent-kind-class">
+					<a href="type.html#coerce" class="tsd-kind-icon">coerce</a>
+				</li>
+				<li class=" tsd-kind-method tsd-parent-kind-class">
+					<a href="type.html#tostring" class="tsd-kind-icon">to<wbr>String</a>
+				</li>
+			</ul>
 		</li>
 		<li class=" tsd-kind-type-alias">
-			<a href="../globals.html#indextype" class="tsd-kind-icon">Index<wbr>Type</a>
+			<a href="../globals.html#columnid" class="tsd-kind-icon">ColumnID</a>
+		</li>
+		<li class=" tsd-kind-type-alias">
+			<a href="../globals.html#groupid" class="tsd-kind-icon">GroupID</a>
+		</li>
+		<li class=" tsd-kind-type-alias">
+			<a href="../globals.html#index" class="tsd-kind-icon">Index</a>
+		</li>
+		<li class=" tsd-kind-type-alias">
+			<a href="../globals.html#messageid" class="tsd-kind-icon">MessageID</a>
+		</li>
+		<li class=" tsd-kind-type-alias">
+			<a href="../globals.html#rowid" class="tsd-kind-icon">RowID</a>
+		</li>
+		<li class=" tsd-kind-type-alias">
+			<a href="../globals.html#version" class="tsd-kind-icon">Version</a>
 		</li>
 	</ul>
 </nav>
@@ -960,16 +981,13 @@ img { max-width: 100%; }
 		<section class="tsd-panel tsd-comment">
 			<div class="tsd-comment tsd-typography">
 				<div class="lead">
-					<p>A single table cell.</p>
+					<p>An enhanced enum class of cell types.</p>
 				</div>
-				<p>The value field is deliberately untyped, since its type is determined by
-					the column type of the cell. The dynamic correspondence between the value
-				and the column type is always preserved.</p>
 				<dl class="tsd-comment-tags">
 					<dt>export</dt>
 					<dd></dd>
 					<dt>class</dt>
-					<dd><p>Cell</p>
+					<dd><p>Type</p>
 					</dd>
 				</dl>
 			</div>
@@ -978,7 +996,7 @@ img { max-width: 100%; }
 			<h3>Hierarchy</h3>
 			<ul class="tsd-hierarchy">
 				<li>
-					<span class="target">Cell</span>
+					<span class="target">Type</span>
 				</li>
 			</ul>
 		</section>
@@ -987,61 +1005,41 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-index-panel">
 				<div class="tsd-index-content">
 					<section class="tsd-index-section ">
-						<h3>Constructors</h3>
-						<ul class="tsd-index-list">
-							<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="cell.html#constructor" class="tsd-kind-icon">constructor</a></li>
-						</ul>
-					</section>
-					<section class="tsd-index-section ">
 						<h3>Properties</h3>
 						<ul class="tsd-index-list">
-							<li class="tsd-kind-property tsd-parent-kind-class"><a href="cell.html#value" class="tsd-kind-icon">value</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="type.html#number" class="tsd-kind-icon">Number</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="type.html#text" class="tsd-kind-icon">Text</a></li>
 						</ul>
 					</section>
 					<section class="tsd-index-section ">
 						<h3>Methods</h3>
 						<ul class="tsd-index-list">
-							<li class="tsd-kind-method tsd-parent-kind-class"><a href="cell.html#copy" class="tsd-kind-icon">copy</a></li>
+							<li class="tsd-kind-method tsd-parent-kind-class"><a href="type.html#coerce" class="tsd-kind-icon">coerce</a></li>
+							<li class="tsd-kind-method tsd-parent-kind-class"><a href="type.html#tostring" class="tsd-kind-icon">to<wbr>String</a></li>
 						</ul>
 					</section>
 				</div>
 			</section>
 		</section>
 		<section class="tsd-panel-group tsd-member-group ">
-			<h2>Constructors</h2>
-			<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
-				<a name="constructor" class="tsd-anchor"></a>
-				<h3>constructor</h3>
-				<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-					<li class="tsd-signature tsd-kind-icon">new <wbr>Cell<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="cell.html" class="tsd-signature-type">Cell</a></li>
-				</ul>
-				<ul class="tsd-descriptions">
-					<li class="tsd-description">
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in source/common/spreadsheet/cell.ts:11</li>
-							</ul>
-						</aside>
-						<h4 class="tsd-parameters-title">Parameters</h4>
-						<ul class="tsd-parameters">
-							<li>
-								<h5><span class="tsd-flag ts-flagOptional">Optional</span> value: <span class="tsd-signature-type">any</span></h5>
-							</li>
-						</ul>
-						<h4 class="tsd-returns-title">Returns <a href="cell.html" class="tsd-signature-type">Cell</a></h4>
-					</li>
-				</ul>
-			</section>
-		</section>
-		<section class="tsd-panel-group tsd-member-group ">
 			<h2>Properties</h2>
-			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-				<a name="value" class="tsd-anchor"></a>
-				<h3><span class="tsd-flag ts-flagOptional">Optional</span> value</h3>
-				<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+				<a name="number" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagStatic">Static</span> Number</h3>
+				<div class="tsd-signature tsd-kind-icon">Number<span class="tsd-signature-symbol">:</span> <a href="type.html" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol"> =&nbsp;new Type()</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in source/common/spreadsheet/cell.ts:12</li>
+						<li>Defined in source/common/spreadsheet/type.ts:8</li>
+					</ul>
+				</aside>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+				<a name="text" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagStatic">Static</span> Text</h3>
+				<div class="tsd-signature tsd-kind-icon">Text<span class="tsd-signature-symbol">:</span> <a href="type.html" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol"> =&nbsp;new Type()</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in source/common/spreadsheet/type.ts:9</li>
 					</ul>
 				</aside>
 			</section>
@@ -1049,30 +1047,68 @@ img { max-width: 100%; }
 		<section class="tsd-panel-group tsd-member-group ">
 			<h2>Methods</h2>
 			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-				<a name="copy" class="tsd-anchor"></a>
-				<h3>copy</h3>
+				<a name="coerce" class="tsd-anchor"></a>
+				<h3>coerce</h3>
 				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-					<li class="tsd-signature tsd-kind-icon">copy<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="cell.html" class="tsd-signature-type">Cell</a></li>
+					<li class="tsd-signature tsd-kind-icon">coerce<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in source/common/spreadsheet/cell.ts:20</li>
+								<li>Defined in source/common/spreadsheet/type.ts:19</li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
 							<div class="lead">
-								<p>Shallow copies this cell.</p>
+								<p>Attempts to coerce the given value to this type. Returns undefined if the
+								coercion fails.</p>
 							</div>
 							<dl class="tsd-comment-tags">
 								<dt>memberof</dt>
-								<dd><p>Cell</p>
+								<dd><p>Type</p>
 								</dd>
 							</dl>
 						</div>
-						<h4 class="tsd-returns-title">Returns <a href="cell.html" class="tsd-signature-type">Cell</a></h4>
-						<p>A copy cell.</p>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>value: <span class="tsd-signature-type">any</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<p>The value to coerce.</p>
+								</div>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						<p>The final value.</p>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<a name="tostring" class="tsd-anchor"></a>
+				<h3>to<wbr>String</h3>
+				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<li class="tsd-signature tsd-kind-icon">to<wbr>String<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in source/common/spreadsheet/type.ts:38</li>
+							</ul>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Serializes this column type name.</p>
+							</div>
+							<dl class="tsd-comment-tags">
+								<dt>memberof</dt>
+								<dd><p>Type</p>
+								</dd>
+							</dl>
+						</div>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						<p>A string representation of this column type name.</p>
 					</li>
 				</ul>
 			</section>

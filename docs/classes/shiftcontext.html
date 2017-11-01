@@ -909,23 +909,23 @@ img { max-width: 100%; }
 </header>
 <nav class="tsd-navigation secondary">
 	<ul>
-		<li class=" tsd-kind-enum">
+		<li class=" tsd-kind-enum tsd-is-not-exported">
 			<a href="../enums/shifttype.html" class="tsd-kind-icon">Shift<wbr>Type</a>
 		</li>
 		<li class=" tsd-kind-class">
-			<a href="cell.html" class="tsd-kind-icon">Cell</a>
+			<a href="client.html" class="tsd-kind-icon">Client</a>
 		</li>
-		<li class=" tsd-kind-class">
-			<a href="column.html" class="tsd-kind-icon">Column</a>
-		</li>
-		<li class=" tsd-kind-class">
-			<a href="columntype.html" class="tsd-kind-icon">Column<wbr>Type</a>
+		<li class=" tsd-kind-class tsd-is-not-exported">
+			<a href="columnoutput.html" class="tsd-kind-icon">Column<wbr>Output</a>
 		</li>
 		<li class=" tsd-kind-class">
 			<a href="message.html" class="tsd-kind-icon">Message</a>
 		</li>
+		<li class=" tsd-kind-class tsd-is-not-exported">
+			<a href="rowoutput.html" class="tsd-kind-icon">Row<wbr>Output</a>
+		</li>
 		<li class=" tsd-kind-class">
-			<a href="row.html" class="tsd-kind-icon">Row</a>
+			<a href="server.html" class="tsd-kind-icon">Server</a>
 		</li>
 		<li class="current tsd-kind-class">
 			<a href="shiftcontext.html" class="tsd-kind-icon">Shift<wbr>Context</a>
@@ -947,17 +947,35 @@ img { max-width: 100%; }
 				</li>
 			</ul>
 		</li>
-		<li class=" tsd-kind-class">
+		<li class=" tsd-kind-class tsd-is-not-exported">
 			<a href="shiftrecord.html" class="tsd-kind-icon">Shift<wbr>Record</a>
 		</li>
 		<li class=" tsd-kind-class">
 			<a href="table.html" class="tsd-kind-icon">Table</a>
 		</li>
-		<li class=" tsd-kind-type-alias">
-			<a href="../globals.html#idtype" class="tsd-kind-icon">IDType</a>
+		<li class=" tsd-kind-class">
+			<a href="tableupdate.html" class="tsd-kind-icon">Table<wbr>Update</a>
+		</li>
+		<li class=" tsd-kind-class">
+			<a href="type.html" class="tsd-kind-icon">Type</a>
 		</li>
 		<li class=" tsd-kind-type-alias">
-			<a href="../globals.html#indextype" class="tsd-kind-icon">Index<wbr>Type</a>
+			<a href="../globals.html#columnid" class="tsd-kind-icon">ColumnID</a>
+		</li>
+		<li class=" tsd-kind-type-alias">
+			<a href="../globals.html#groupid" class="tsd-kind-icon">GroupID</a>
+		</li>
+		<li class=" tsd-kind-type-alias">
+			<a href="../globals.html#index" class="tsd-kind-icon">Index</a>
+		</li>
+		<li class=" tsd-kind-type-alias">
+			<a href="../globals.html#messageid" class="tsd-kind-icon">MessageID</a>
+		</li>
+		<li class=" tsd-kind-type-alias">
+			<a href="../globals.html#rowid" class="tsd-kind-icon">RowID</a>
+		</li>
+		<li class=" tsd-kind-type-alias">
+			<a href="../globals.html#version" class="tsd-kind-icon">Version</a>
 		</li>
 	</ul>
 </nav>
@@ -1013,10 +1031,10 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 				<a name="shifts" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagPrivate">Private</span> shifts</h3>
-				<div class="tsd-signature tsd-kind-icon">shifts<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="shiftrecord.html" class="tsd-signature-type">ShiftRecord</a><span class="tsd-signature-symbol">&gt;</span></div>
+				<div class="tsd-signature tsd-kind-icon">shifts<span class="tsd-signature-symbol">:</span> <a href="shiftrecord.html" class="tsd-signature-type">ShiftRecord</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;new Array()</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in source/common/editor/shiftContext.ts:30</li>
+						<li>Defined in <a href="https://github.com/whaatt/Sink/blob/5b2348f/source/common/editor/shiftContext.ts#L30">source/common/editor/shiftContext.ts:30</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1033,7 +1051,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in source/common/editor/shiftContext.ts:48</li>
+								<li>Defined in <a href="https://github.com/whaatt/Sink/blob/5b2348f/source/common/editor/shiftContext.ts#L48">source/common/editor/shiftContext.ts:48</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1069,7 +1087,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in source/common/editor/shiftContext.ts:38</li>
+								<li>Defined in <a href="https://github.com/whaatt/Sink/blob/5b2348f/source/common/editor/shiftContext.ts#L38">source/common/editor/shiftContext.ts:38</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1105,7 +1123,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in source/common/editor/shiftContext.ts:59</li>
+								<li>Defined in <a href="https://github.com/whaatt/Sink/blob/5b2348f/source/common/editor/shiftContext.ts#L59">source/common/editor/shiftContext.ts:59</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1147,7 +1165,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in source/common/editor/shiftContext.ts:72</li>
+								<li>Defined in <a href="https://github.com/whaatt/Sink/blob/5b2348f/source/common/editor/shiftContext.ts#L72">source/common/editor/shiftContext.ts:72</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">

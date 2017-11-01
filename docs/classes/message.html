@@ -909,17 +909,14 @@ img { max-width: 100%; }
 </header>
 <nav class="tsd-navigation secondary">
 	<ul>
-		<li class=" tsd-kind-enum">
+		<li class=" tsd-kind-enum tsd-is-not-exported">
 			<a href="../enums/shifttype.html" class="tsd-kind-icon">Shift<wbr>Type</a>
 		</li>
 		<li class=" tsd-kind-class">
-			<a href="cell.html" class="tsd-kind-icon">Cell</a>
+			<a href="client.html" class="tsd-kind-icon">Client</a>
 		</li>
-		<li class=" tsd-kind-class">
-			<a href="column.html" class="tsd-kind-icon">Column</a>
-		</li>
-		<li class=" tsd-kind-class">
-			<a href="columntype.html" class="tsd-kind-icon">Column<wbr>Type</a>
+		<li class=" tsd-kind-class tsd-is-not-exported">
+			<a href="columnoutput.html" class="tsd-kind-icon">Column<wbr>Output</a>
 		</li>
 		<li class="current tsd-kind-class">
 			<a href="message.html" class="tsd-kind-icon">Message</a>
@@ -931,7 +928,7 @@ img { max-width: 100%; }
 					<a href="message.html#uuid" class="tsd-kind-icon">UUID</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-class">
-					<a href="message.html#failed" class="tsd-kind-icon">failed</a>
+					<a href="message.html#groupid" class="tsd-kind-icon">groupID</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-class">
 					<a href="message.html#update" class="tsd-kind-icon">update</a>
@@ -941,23 +938,44 @@ img { max-width: 100%; }
 				</li>
 			</ul>
 		</li>
+		<li class=" tsd-kind-class tsd-is-not-exported">
+			<a href="rowoutput.html" class="tsd-kind-icon">Row<wbr>Output</a>
+		</li>
 		<li class=" tsd-kind-class">
-			<a href="row.html" class="tsd-kind-icon">Row</a>
+			<a href="server.html" class="tsd-kind-icon">Server</a>
 		</li>
 		<li class=" tsd-kind-class">
 			<a href="shiftcontext.html" class="tsd-kind-icon">Shift<wbr>Context</a>
 		</li>
-		<li class=" tsd-kind-class">
+		<li class=" tsd-kind-class tsd-is-not-exported">
 			<a href="shiftrecord.html" class="tsd-kind-icon">Shift<wbr>Record</a>
 		</li>
 		<li class=" tsd-kind-class">
 			<a href="table.html" class="tsd-kind-icon">Table</a>
 		</li>
-		<li class=" tsd-kind-type-alias">
-			<a href="../globals.html#idtype" class="tsd-kind-icon">IDType</a>
+		<li class=" tsd-kind-class">
+			<a href="tableupdate.html" class="tsd-kind-icon">Table<wbr>Update</a>
+		</li>
+		<li class=" tsd-kind-class">
+			<a href="type.html" class="tsd-kind-icon">Type</a>
 		</li>
 		<li class=" tsd-kind-type-alias">
-			<a href="../globals.html#indextype" class="tsd-kind-icon">Index<wbr>Type</a>
+			<a href="../globals.html#columnid" class="tsd-kind-icon">ColumnID</a>
+		</li>
+		<li class=" tsd-kind-type-alias">
+			<a href="../globals.html#groupid" class="tsd-kind-icon">GroupID</a>
+		</li>
+		<li class=" tsd-kind-type-alias">
+			<a href="../globals.html#index" class="tsd-kind-icon">Index</a>
+		</li>
+		<li class=" tsd-kind-type-alias">
+			<a href="../globals.html#messageid" class="tsd-kind-icon">MessageID</a>
+		</li>
+		<li class=" tsd-kind-type-alias">
+			<a href="../globals.html#rowid" class="tsd-kind-icon">RowID</a>
+		</li>
+		<li class=" tsd-kind-type-alias">
+			<a href="../globals.html#version" class="tsd-kind-icon">Version</a>
 		</li>
 	</ul>
 </nav>
@@ -968,11 +986,9 @@ img { max-width: 100%; }
 				<div class="lead">
 					<p>An edit or acknowledgment message between nodes.</p>
 				</div>
-				<p>Messages are specified as a 3-tuple, consisting of a UUID, a synced version
-					number to modify from, and a specification for a table update. When an edit
-					fails, the message will be returned (unicast) to the sender and the failed
-					bit will be set. When an edit succeeds, the version number will be updated
-				to reflect reality and the message will be broadcast to all nodes.</p>
+				<p>Messages are specified as a 4-tuple, consisting of a version number to
+					modify from, a grouping ID for dependent updates, the specific update to be
+				applied, and a UUID for each update.</p>
 				<dl class="tsd-comment-tags">
 					<dt>export</dt>
 					<dd></dd>
@@ -1004,7 +1020,7 @@ img { max-width: 100%; }
 						<h3>Properties</h3>
 						<ul class="tsd-index-list">
 							<li class="tsd-kind-property tsd-parent-kind-class"><a href="message.html#uuid" class="tsd-kind-icon">UUID</a></li>
-							<li class="tsd-kind-property tsd-parent-kind-class"><a href="message.html#failed" class="tsd-kind-icon">failed</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-class"><a href="message.html#groupid" class="tsd-kind-icon">groupID</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-class"><a href="message.html#update" class="tsd-kind-icon">update</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-class"><a href="message.html#version" class="tsd-kind-icon">version</a></li>
 						</ul>
@@ -1018,28 +1034,28 @@ img { max-width: 100%; }
 				<a name="constructor" class="tsd-anchor"></a>
 				<h3>constructor</h3>
 				<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-					<li class="tsd-signature tsd-kind-icon">new <wbr>Message<span class="tsd-signature-symbol">(</span>version<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, update<span class="tsd-signature-symbol">: </span><a href="../modules/tableupdate.html" class="tsd-signature-type">TableUpdate</a>, UUID<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, failed<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="message.html" class="tsd-signature-type">Message</a></li>
+					<li class="tsd-signature tsd-kind-icon">new <wbr>Message<span class="tsd-signature-symbol">(</span>version<span class="tsd-signature-symbol">: </span><a href="../globals.html#version" class="tsd-signature-type">Version</a>, groupID<span class="tsd-signature-symbol">: </span><a href="../globals.html#groupid" class="tsd-signature-type">GroupID</a>, update<span class="tsd-signature-symbol">: </span><a href="tableupdate.html" class="tsd-signature-type">TableUpdate</a>, UUID<span class="tsd-signature-symbol">?: </span><a href="../globals.html#messageid" class="tsd-signature-type">MessageID</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="message.html" class="tsd-signature-type">Message</a></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in source/common/editor/message.ts:17</li>
+								<li>Defined in <a href="https://github.com/whaatt/Sink/blob/5b2348f/source/common/editor/message.ts#L20">source/common/editor/message.ts:20</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
 							<li>
-								<h5>version: <span class="tsd-signature-type">number</span></h5>
+								<h5>version: <a href="../globals.html#version" class="tsd-signature-type">Version</a></h5>
 							</li>
 							<li>
-								<h5>update: <a href="../modules/tableupdate.html" class="tsd-signature-type">TableUpdate</a></h5>
+								<h5>groupID: <a href="../globals.html#groupid" class="tsd-signature-type">GroupID</a></h5>
 							</li>
 							<li>
-								<h5><span class="tsd-flag ts-flagDefault value">Default value</span> UUID: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;UUIDV4()</span></h5>
+								<h5>update: <a href="tableupdate.html" class="tsd-signature-type">TableUpdate</a></h5>
 							</li>
 							<li>
-								<h5><span class="tsd-flag ts-flagDefault value">Default value</span> failed: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></h5>
+								<h5><span class="tsd-flag ts-flagDefault value">Default value</span> UUID: <a href="../globals.html#messageid" class="tsd-signature-type">MessageID</a><span class="tsd-signature-symbol"> =&nbsp;UUIDV4()</span></h5>
 							</li>
 						</ul>
 						<h4 class="tsd-returns-title">Returns <a href="message.html" class="tsd-signature-type">Message</a></h4>
@@ -1052,40 +1068,40 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 				<a name="uuid" class="tsd-anchor"></a>
 				<h3>UUID</h3>
-				<div class="tsd-signature tsd-kind-icon">UUID<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+				<div class="tsd-signature tsd-kind-icon">UUID<span class="tsd-signature-symbol">:</span> <a href="../globals.html#messageid" class="tsd-signature-type">MessageID</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in source/common/editor/message.ts:21</li>
+						<li>Defined in <a href="https://github.com/whaatt/Sink/blob/5b2348f/source/common/editor/message.ts#L25">source/common/editor/message.ts:25</a></li>
 					</ul>
 				</aside>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-				<a name="failed" class="tsd-anchor"></a>
-				<h3>failed</h3>
-				<div class="tsd-signature tsd-kind-icon">failed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+				<a name="groupid" class="tsd-anchor"></a>
+				<h3>groupID</h3>
+				<div class="tsd-signature tsd-kind-icon">groupID<span class="tsd-signature-symbol">:</span> <a href="../globals.html#groupid" class="tsd-signature-type">GroupID</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in source/common/editor/message.ts:22</li>
+						<li>Defined in <a href="https://github.com/whaatt/Sink/blob/5b2348f/source/common/editor/message.ts#L23">source/common/editor/message.ts:23</a></li>
 					</ul>
 				</aside>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 				<a name="update" class="tsd-anchor"></a>
 				<h3>update</h3>
-				<div class="tsd-signature tsd-kind-icon">update<span class="tsd-signature-symbol">:</span> <a href="../modules/tableupdate.html" class="tsd-signature-type">TableUpdate</a></div>
+				<div class="tsd-signature tsd-kind-icon">update<span class="tsd-signature-symbol">:</span> <a href="tableupdate.html" class="tsd-signature-type">TableUpdate</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in source/common/editor/message.ts:20</li>
+						<li>Defined in <a href="https://github.com/whaatt/Sink/blob/5b2348f/source/common/editor/message.ts#L24">source/common/editor/message.ts:24</a></li>
 					</ul>
 				</aside>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 				<a name="version" class="tsd-anchor"></a>
 				<h3>version</h3>
-				<div class="tsd-signature tsd-kind-icon">version<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+				<div class="tsd-signature tsd-kind-icon">version<span class="tsd-signature-symbol">:</span> <a href="../globals.html#version" class="tsd-signature-type">Version</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in source/common/editor/message.ts:19</li>
+						<li>Defined in <a href="https://github.com/whaatt/Sink/blob/5b2348f/source/common/editor/message.ts#L22">source/common/editor/message.ts:22</a></li>
 					</ul>
 				</aside>
 			</section>
