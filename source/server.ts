@@ -1,8 +1,9 @@
-import { GroupID, Message, ShiftContext, Version } from 'common/editor'
+import { GroupID, Message, MessageID, ShiftContext, Version }
+  from '@common/editor'
 
 import { Client } from './client'
 import { Queue } from 'typescript-collections'
-import { Table } from 'common/spreadsheet'
+import { Table } from '@common/spreadsheet'
 
 /**
  * A table server node.
@@ -73,6 +74,11 @@ export class Server {
     this.clients.forEach((client) => client.accepted(message))
   }
 
+  // Broadcast a failure of a message.
+  private reject (messageID: MessageID, groupID: GroupID) {
+    this.clients.forEach((client) => client.rejected(messageID, groupID))
+  }
+
   // Processes the message queue.
   private process (): void {
     while (!this.pending.isEmpty()) {
@@ -85,7 +91,7 @@ export class Server {
       if (message.update.needsTransform()) {
         const shiftContext = new ShiftContext()
         // Accumulate any shift transforms since the message was created.
-        for (let i = message.version; i < this.version; i += 1) {
+        for (let i = message.version; i <= this.version; i += 1) {
           this.history[i].update.shift(shiftContext)
         }
 
@@ -93,11 +99,18 @@ export class Server {
         message.update.transform(shiftContext)
       }
 
-      // Bump version.
-      this.version += 1
-      message.version = this.version
+      // Update SHOULD NOT leave side effects on failure.
       const success = message.update.apply(this.table)
-      if (success) this.accept(message)
+
+      if (success) {
+        this.version += 1
+        message.version = this.version
+        this.history[this.version] = message
+        this.accept(message)
+      } else {
+        this.failed.add(message.groupID)
+        this.reject(message.UUID, message.groupID)
+      }
     }
   }
 }

@@ -2,13 +2,14 @@
   "name": "sink",
   "version": "0.0.1",
   "description": "Proof-of-concept shared spreadsheets.",
+  "main": "build/source/index.js",
   "scripts": {
     "build": "tsc",
     "clean": "rimraf build docs",
     "docs": "typedoc --options typedoc.json source/",
     "lint": "tslint --project tsconfig.json --format stylish",
-    "prepare": "run-s clean lint build docs",
-    "test": "mocha",
+    "prepare": "run-s clean lint build test docs",
+    "test": "mocha build/test/**/*.js",
     "watch": "tsc -w"
   },
   "repository": {
@@ -39,7 +40,10 @@
     "uuid": "^3.1.0"
   },
   "devDependencies": {
+    "@types/chai": "^4.0.4",
+    "@types/mocha": "^2.2.44",
     "@types/node": "^8.0.28",
+    "chai": "^4.1.2",
     "mocha": "^3.5.3",
     "npm-run-all": "^4.1.1",
     "rimraf": "^2.6.2",
@@ -49,6 +53,7 @@
     "typescript": "^2.5.2"
   },
   "_moduleAliases": {
-    "common": "build/source/common"
+    "@common": "build/source/common",
+    "@source": "build/source"
   }
 }

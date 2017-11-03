@@ -1,7 +1,8 @@
 import * as UUIDV4 from 'uuid/v4'
 
-import { ColumnID, Index, RowID, Table, Type } from 'common/spreadsheet'
-import { GroupID, Message, TableUpdate, Version } from 'common/editor'
+import { ColumnID, Index, RowID, Table, Type } from '@common/spreadsheet'
+import { GroupID, Message, MessageID, TableUpdate, Version }
+  from '@common/editor'
 
 import { Queue } from 'typescript-collections'
 import { Server } from './server'
@@ -194,6 +195,17 @@ export class Client {
     message.update.apply(this.table)
     this.version = message.version
     this.groupID = UUIDV4()
+  }
+
+  /**
+   * Receives a rejection notification for a message.
+   *
+   * @param {MessageID} messageID The message ID.
+   * @param {GroupID} groupID The group ID of the message (to blacklist).
+   * @memberof Client
+   */
+  public rejected (messageID: MessageID, groupID: GroupID): void {
+    if (this.groupID === groupID) this.groupID = UUIDV4()
   }
 
   // Sends a message or stashes it.

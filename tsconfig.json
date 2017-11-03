@@ -1,7 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./source",
+    "baseUrl": ".",
     "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -16,6 +16,14 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "outDir": "build",
+    "paths": {
+      "@common/*": [
+        "source/common/*"
+      ],
+      "@source": [
+        "source"
+      ]
+    },
     "pretty": true,
     "strict": true,
     "target": "es6",

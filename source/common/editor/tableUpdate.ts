@@ -1,4 +1,4 @@
-import { ColumnID, Index, RowID, Table, Type } from 'common/spreadsheet'
+import { ColumnID, Index, RowID, Table, Type } from '@common/spreadsheet'
 
 import { ShiftContext } from './shiftContext'
 
@@ -124,6 +124,10 @@ export namespace TableUpdate {
       super()
     }
 
+    needsTransform (): boolean {
+      return true
+    }
+
     transform (context: ShiftContext): void {
       this.targetIndex = context.transform(this.targetIndex)
     }
@@ -215,6 +219,7 @@ export namespace TableUpdate {
       // Can whole column can be coerced?
       table.cells.forEach((columns) => {
         const cell = columns.get(this.columnID)
+        if (cell === undefined) return // Cell not present in row.
         if (this.columnType.coerce(cell) === undefined) canCoerce = false
       })
 
@@ -222,9 +227,11 @@ export namespace TableUpdate {
       // Whole column can be coerced.
       table.cells.forEach((columns) => {
         const cell = columns.get(this.columnID)
+        if (cell === undefined) return // Cell not present in row.
         columns.set(this.columnID, this.columnType.coerce(cell))
       })
 
+      table.columns.set(this.columnID, this.columnType)
       return true
     }
   }

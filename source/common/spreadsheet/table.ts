@@ -80,7 +80,7 @@ export class Table {
 
     // Add rows with cell values by column.
     this.order.forEach((rowID) => objectJSON.rows
-      .push(new RowOutput(rowID, Object.assign(Array
+      .push(new RowOutput(rowID, Object.assign({}, ...Array
         .from(this.cells.get(rowID) as Map<ColumnID, any>)
         .map(([columnID, cell]) => ({ [columnID]: cell }))))))
 
