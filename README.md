@@ -47,8 +47,8 @@ updates to a local table state before receiving a server update. Some of these
 updates might fail to merge, and if this is the case, we might want to stop
 applying the remaining updates (if they are dependent). In my code, each
 message can be marked with the same group ID to reflect a dependency. _By
-default, currently, I only change the group ID when the local table state is
-updated._
+default, the group ID only changes when the local table state is updated (but
+this is just a straw-man option)._
 
 ### Merging ###
 
@@ -76,16 +76,16 @@ spreadsheet software.
 #### Shift Contexts ####
 
 Perhaps the trickiest part of the whole module is handling asynchronous
-movement of rows. As a motivating example, consider two clients that are
-currently offline. If one client deletes a row, and the other client moves a
-row, it is possible that the indices of the move will be affected if the
-delete update is processed first.
+movement of rows. As a motivating example, take two clients that are currently
+offline. If one client deletes a row, and the other client moves a row, it is
+possible that the indices of the move will not reflect the original intent if
+the delete update is processed first.
 
 For this reason, every message is published with the version number it is
-modifying. On the server side, we keep track of the entire update history, and
-if the next update to be processed was related to a historic table state (and
-not the current one), and if the udpate relies on row indices, we need to
-compute its _shift context_.
+modifying. On the server side, we keep track of the entire update history. If
+the next update to be processed was based on an old table state (and not the
+current one), and if the update relies on row indices, we need to compute its
+_shift context_.
 
 Shift contexts answer the following question: Given the indices in a certain
 update, what do those indices correspond to in the present table state? We can
@@ -95,10 +95,9 @@ updates.
 To compute a shift context, we simply iterate over the update history, between
 the version number in the update being processed and the current version
 number. For each intervening update, we store where it deleted and inserted
-rows (note that we can model a move as a deletion and an insertion), if it did
-so.
+rows (note that we can model a move as a deletion and an insertion).
 
-Then, to transform the indices in the update being processed, we increment
-and decrement iteratively for each intervening update (based on whether the
+Then, to transform an index in the update being processed, we increment and
+decrement it iteratively for each intervening update (based on whether the
 intervening update could have affected the index in question). Once the update
 is applied, we store its transformed indices in the update history.
